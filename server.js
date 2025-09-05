@@ -35,7 +35,7 @@ app.post('/api/:key', (req,res) => {
         return res.status(409).json({ error: 'Key already exists' });
     }
 
-    dat[key] = value;
+    data[key] = value;
     res.status(201).json({message: 'Data created successfully'});
 });
 
@@ -49,7 +49,7 @@ app.put('/api/:key', (req,res) => {
     }
 
     if(!data[key]){
-        return res.status(409).json({ error: 'Key not found' });
+        return res.status(404).json({ error: 'Key not found' });
     }
 
     data[key] = value;
@@ -60,7 +60,7 @@ app.delete('/api/:key', (req,res) => {
     const {key} = req.params;
 
     if(!data[key]){
-        return res.status(409).json({ error: 'Key not found' });
+        return res.status(404).json({ error: 'Key not found' });
     }
 
     delete data[key];
@@ -68,11 +68,11 @@ app.delete('/api/:key', (req,res) => {
 });
 
 // Ruta pagina principal
-
 app.get('/', (req,res) =>{
-    res.sendFile(path.json(__dirname, 'interface', 'index.html'));
+    res.sendFile(path.join(__dirname, 'interface', 'index.html'));
 });
 
+// Iniciar servidor
 app.listen(port, () => {
     console.log(`WebDev Launchpad running at http://localhost:${port}`);
 });

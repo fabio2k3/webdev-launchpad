@@ -4,7 +4,97 @@
     <title>Mi Interface</title>
 </head>
 <body>
-    <h>Servidor funcionando!</h>
-    <p>La API esta disponible en /api</p>
+    <div class="container">
+        <header>
+            <h1>🚀 WebDev Launchpad</h1>
+            <p>API REST simple con Node.js y Express</p>
+        </header>
+
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>Servidor conectado</span>
+        </div>
+
+        <main>
+            <section class="api-section">
+                <h2>Endpoints disponibles</h2>
+                
+                <div class="endpoint">
+                    <div class="method get">GET</div>
+                    <div class="details">
+                        <code>/api</code>
+                        <p>Obtener todos los datos</p>
+                        <button onclick="copyToClipboard('curl http://localhost:8000/api')">
+                            Copiar comando curl
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="method get">GET</div>
+                    <div class="details">
+                        <code>/api/:key</code>
+                        <p>Obtener un valor específico</p>
+                        <button onclick="copyToClipboard('curl http://localhost:8000/api/mi_clave')">
+                            Copiar comando curl
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="method post">POST</div>
+                    <div class="details">
+                        <code>/api/:key</code>
+                        <p>Crear un nuevo valor</p>
+                        <button onclick="copyToClipboard('curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"value\\\": \\\"mi_valor\\\"}\" http://localhost:8000/api/nueva_clave')">
+                            Copiar comando curl
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="method put">PUT</div>
+                    <div class="details">
+                        <code>/api/:key</code>
+                        <p>Actualizar un valor existente</p>
+                        <button onclick="copyToClipboard('curl -X PUT -H \"Content-Type: application/json\" -d \"{\\\"value\\\": \\\"nuevo_valor\\\"}\" http://localhost:8000/api/clave_existente')">
+                            Copiar comando curl
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="method delete">DELETE</div>
+                    <div class="details">
+                        <code>/api/:key</code>
+                        <p>Eliminar un valor</p>
+                        <button onclick="copyToClipboard('curl -X DELETE http://localhost:8000/api/clave_a_eliminar')">
+                            Copiar comando curl
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="instructions">
+                <h2>¿Cómo usar?</h2>
+                <ol>
+                    <li>Haz clic en "Copiar comando curl" para el endpoint que quieras probar</li>
+                    <li>Abre una terminal en tu computadora</li>
+                    <li>Pega el comando y ejecútalo</li>
+                    <li>¡Verás la respuesta de la API en tu terminal!</li>
+                </ol>
+            </section>
+        </main>
+
+        <footer>
+            <p>Hecho con Node.js + Express | WebDev Launchpad</p>
+        </footer>
+    </div>
+
+    <div class="notification" id="notification">
+        Comando copiado al portapapeles ✓
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

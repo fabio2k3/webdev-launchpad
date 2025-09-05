@@ -1,87 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <title>Mi Interface</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>WebDev Launchpad</title>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🚀 WebDev Launchpad</h1>
+            <h1>WebDev Launchpad</h1>
             <p>API REST simple con Node.js y Express</p>
         </header>
 
-        <div class="status">
-            <div class="status-dot"></div>
-            <span>Servidor conectado</span>
-        </div>
-
         <main>
-            <section class="api-section">
-                <h2>Endpoints disponibles</h2>
+            <section class="endpoints">
+                <h2>Endpoints Disponibles</h2>
                 
                 <div class="endpoint">
-                    <div class="method get">GET</div>
-                    <div class="details">
-                        <code>/api</code>
-                        <p>Obtener todos los datos</p>
-                        <button onclick="copyToClipboard('curl http://localhost:8000/api')">
-                            Copiar comando curl
-                        </button>
-                    </div>
+                    <span class="method get">GET</span>
+                    <code>/api</code>
+                    <p>Obtener todos los datos</p>
+                    <button class="copy-btn" data-cmd="curl http://localhost:8000/api">Copiar comando</button>
                 </div>
 
                 <div class="endpoint">
-                    <div class="method get">GET</div>
-                    <div class="details">
-                        <code>/api/:key</code>
-                        <p>Obtener un valor específico</p>
-                        <button onclick="copyToClipboard('curl http://localhost:8000/api/mi_clave')">
-                            Copiar comando curl
-                        </button>
-                    </div>
+                    <span class="method get">GET</span>
+                    <code>/api/:key</code>
+                    <p>Obtener un valor específico</p>
+                    <button class="copy-btn" data-cmd="curl http://localhost:8000/api/mi_clave">Copiar comando</button>
                 </div>
 
                 <div class="endpoint">
-                    <div class="method post">POST</div>
-                    <div class="details">
-                        <code>/api/:key</code>
-                        <p>Crear un nuevo valor</p>
-                        <button onclick="copyToClipboard('curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"value\\\": \\\"mi_valor\\\"}\" http://localhost:8000/api/nueva_clave')">
-                            Copiar comando curl
-                        </button>
-                    </div>
+                    <span class="method post">POST</span>
+                    <code>/api/:key</code>
+                    <p>Crear un nuevo valor</p>
+                    <button class="copy-btn" data-cmd="curl -X POST -H 'Content-Type: application/json' -d '{\"value\":\"mi_valor\"}' http://localhost:8000/api/nueva_clave">Copiar comando</button>
                 </div>
 
                 <div class="endpoint">
-                    <div class="method put">PUT</div>
-                    <div class="details">
-                        <code>/api/:key</code>
-                        <p>Actualizar un valor existente</p>
-                        <button onclick="copyToClipboard('curl -X PUT -H \"Content-Type: application/json\" -d \"{\\\"value\\\": \\\"nuevo_valor\\\"}\" http://localhost:8000/api/clave_existente')">
-                            Copiar comando curl
-                        </button>
-                    </div>
+                    <span class="method put">PUT</span>
+                    <code>/api/:key</code>
+                    <p>Actualizar un valor existente</p>
+                    <button class="copy-btn" data-cmd="curl -X PUT -H 'Content-Type: application/json' -d '{\"value\":\"nuevo_valor\"}' http://localhost:8000/api/clave_existente">Copiar comando</button>
                 </div>
 
                 <div class="endpoint">
-                    <div class="method delete">DELETE</div>
-                    <div class="details">
-                        <code>/api/:key</code>
-                        <p>Eliminar un valor</p>
-                        <button onclick="copyToClipboard('curl -X DELETE http://localhost:8000/api/clave_a_eliminar')">
-                            Copiar comando curl
-                        </button>
-                    </div>
+                    <span class="method delete">DELETE</span>
+                    <code>/api/:key</code>
+                    <p>Eliminar un valor</p>
+                    <button class="copy-btn" data-cmd="curl -X DELETE http://localhost:8000/api/clave_a_eliminar">Copiar comando</button>
                 </div>
             </section>
 
             <section class="instructions">
-                <h2>¿Cómo usar?</h2>
+                <h2>Instrucciones</h2>
                 <ol>
-                    <li>Haz clic en "Copiar comando curl" para el endpoint que quieras probar</li>
+                    <li>Haz clic en "Copiar comando" para el endpoint que quieras probar</li>
                     <li>Abre una terminal en tu computadora</li>
                     <li>Pega el comando y ejecútalo</li>
-                    <li>¡Verás la respuesta de la API en tu terminal!</li>
+                    <li>Verás la respuesta de la API en tu terminal</li>
                 </ol>
             </section>
         </main>
@@ -91,10 +69,52 @@
         </footer>
     </div>
 
-    <div class="notification" id="notification">
-        Comando copiado al portapapeles ✓
-    </div>
+    <div id="notification" aria-hidden="true">Comando copiado al portapapeles ✓</div>
 
-    <script src="script.js"></script>
+    <script>
+        (function () {
+            const notification = document.getElementById('notification');
+
+            function showNotification(msg) {
+                notification.textContent = msg || 'Comando copiado al portapapeles ✓';
+                notification.setAttribute('aria-hidden', 'false');
+                clearTimeout(showNotification._t);
+                showNotification._t = setTimeout(() => {
+                    notification.setAttribute('aria-hidden', 'true');
+                }, 2000);
+            }
+
+            function fallbackCopy(text) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    showNotification();
+                } catch (e) {
+                    showNotification('No se pudo copiar');
+                }
+                document.body.removeChild(ta);
+            }
+
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const cmd = btn.getAttribute('data-cmd') || '';
+                    if (!cmd) return showNotification('Comando vacío');
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(cmd)
+                            .then(() => showNotification())
+                            .catch(() => fallbackCopy(cmd));
+                    } else {
+                        fallbackCopy(cmd);
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>

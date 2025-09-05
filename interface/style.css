@@ -1,0 +1,195 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Tipografía y fondo */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #3498db;
+    margin-bottom: 15px;
+}
+
+/* Layout de endpoints */
+.endpoints {
+    margin-bottom: 30px;
+}
+
+.endpoint {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #ddd;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Métodos HTTP */
+.method {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 0.85rem;
+}
+
+.method.get {
+    background: #28a745;
+}
+
+.method.post {
+    background: #007bff;
+}
+
+.method.put {
+    background: #ff9800;
+}
+
+.method.delete {
+    background: #dc3545;
+}
+
+/* Código inline */
+code {
+    background: #e9ecef;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+/* Texto de descripción */
+.endpoint p {
+    margin: 10px 0;
+    color: #666;
+    flex: 1 1 100%;
+}
+
+/* Botones */
+button,
+.copy-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.15s, transform 0.06s;
+    align-self: flex-start;
+}
+
+button:hover,
+.copy-btn:hover {
+    background: #5a6268;
+}
+
+button:active,
+.copy-btn:active {
+    transform: translateY(1px);
+}
+
+/* Accesibilidad: enfoque visible */
+button:focus,
+.copy-btn:focus,
+button:focus-visible,
+.copy-btn:focus-visible {
+    outline: 3px solid rgba(52, 152, 219, 0.3);
+    outline-offset: 2px;
+}
+
+/* Instrucciones */
+.instructions {
+    background: #e7f5ff;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.instructions ol {
+    margin-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* NOTIFICACIÓN: se controla mediante el atributo aria-hidden en el HTML/JS */
+/* Visible cuando aria-hidden="false" */
+#notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Mostrar cuando JS ponga aria-hidden="false" */
+#notification[aria-hidden="false"] {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Pequeño ajuste responsivo */
+@media (max-width: 480px) {
+    .endpoint {
+        padding: 12px;
+    }
+    .method { font-size: 0.8rem; }
+    button, .copy-btn { padding: 7px 10px; font-size: 0.85rem; }
+}
